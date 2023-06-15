@@ -1,4 +1,4 @@
-# AWSProjects
+# AWSProject(Serverless)
 FETCH DETAILS FROM DYNAMODB THROUGH API USING LAMBDA(PYTHON)
 
 1.create api (RESTAPI) in api gateway
