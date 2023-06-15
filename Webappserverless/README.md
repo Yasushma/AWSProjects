@@ -9,7 +9,7 @@ FETCH DETAILS FROM DYNAMODB THROUGH API USING LAMBDA(PYTHON)
 
 4.IAM permissions is required to access dynamodb by lambdaFunc(role)
 
-5.Add index.html,jquery.mjs,knockt.mjs to s3 and enable static web hosting Aceess the url.
+5.Add [index.html](Webappserverless/index.html),jquery.mjs,knockt.mjs to s3 and enable static web hosting Aceess the url.
 
 
 
