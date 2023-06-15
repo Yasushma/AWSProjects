@@ -1,0 +1,12 @@
+GET DETAILS
+{
+  "Emailid": "sushma"
+}
+
+POST DETAILS
+
+{
+  "Emailid": "sita@gamil.com",
+  "FirstName": "lucky",
+  "LastName": "bunny"
+}
