@@ -1,0 +1,33 @@
+---
+- name: Manage Terraform
+  hosts: my_hosts
+  
+  become: true
+
+  tasks:
+    
+    
+    - name: Run Terraform Init
+      command:
+        cmd: terraform init
+        chdir: "/mnt/c/Program Files/project/react-app/ansible"
+      tags: 
+        - runinit
+      
+
+    - name: Run Terraform Plan
+      command:
+        cmd: terraform plan -out=tfplan
+        chdir: "/mnt/c/Program Files/project/react-app/terraform"
+      register: terraform_plan_output
+    - debug:
+        var: terraform_plan_output.stdout_lines
+      tags:
+        -runplan
+    - name: Run Terraform Apply
+      command:
+        cmd: terraform apply -auto-approve tfplan
+        chdir: "/mnt/c/Program Files/project/react-app/terraform"
+      when: terraform_plan_output.stdout_lines is defined and terraform_plan_output.stdout_lines | length > 0
+
+      

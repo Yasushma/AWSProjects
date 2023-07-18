@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <style>
+        /* CSS styles */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+            font-family: sans-serif;
+        }
+
+        .container {
+            width: 400px;
+            background-color: #e0e0e0;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td {
+            padding: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .success-message {
+            color: green;
+            font-weight: bold;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="knockout-3.4.2.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var CustomerDetailsViewModel = function() {
+                var self = this;
+                self.FirstName = ko.observable("");
+                self.LastName = ko.observable("");
+                self.Emailid = ko.observable("");
+                self.SuccessMessage = ko.observable("");
+                self.ErrorMessage = ko.observable("");
+
+                self.SaveCustomerDetails = function() {
+                    var CustomerDetail = {
+                        Emailid: self.Emailid(),
+                        FirstName: self.FirstName(),
+                        LastName: self.LastName()
+                    };
+                    $.ajax({
+                        url: ' https://k6gjwlhfv0.execute-api.ap-south-1.amazonaws.com/dev/postdetails',
+                        cache: false,
+                        type: 'POST',
+                        contentType: 'application/json;charset=utf-8',
+                        data: ko.toJSON(CustomerDetail),
+                        success: function(data) {
+                            self.SuccessMessage("sucess");
+                            self.ErrorMessage("");
+                            self.FirstName('');
+                            self.LastName('');
+                            self.Emailid('');
+                        },
+                        error: function(xhr, textstatus, err) {
+                            self.ErrorMessage("Error: " + err);
+                            self.SuccessMessage("");
+                        }
+                    });
+                };
+            };
+
+            var viewModel = new CustomerDetailsViewModel();
+            ko.applyBindings(viewModel);
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <table>
+            <tr>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        First Name: <input data-bind="value: FirstName" />
+                    </p>
+                    <p>
+                        Last Name: <input data-bind="value: LastName" />
+                    </p>
+                    <p>
+                        Email ID: <input data-bind="value: Emailid" />
+                    </p>
+                    <p class="success-message" data-bind="text: SuccessMessage">Sucessful</p>
+                    <p class="error-message" data-bind="text: ErrorMessage"></p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button data-bind="click: $root.SaveCustomerDetails">Save</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

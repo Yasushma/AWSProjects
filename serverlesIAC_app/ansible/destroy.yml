@@ -1,0 +1,9 @@
+- name: Destroy Terraform resources
+  hosts: my_hosts
+  gather_facts: false
+
+  tasks:
+    - name: Run Terraform destroy
+      ansible.builtin.shell: terraform destroy -auto-approve
+      args:
+        chdir: "/mnt/c/Program Files/project/react-app/terraform"
