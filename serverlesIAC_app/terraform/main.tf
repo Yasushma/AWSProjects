@@ -1,8 +1,8 @@
 
 # Define the provider (e.g., AWS)
 provider "aws" {
-  access_key = "AKIA5WHU6FVFIYGTT4SN"
-  secret_key = "cjq0LkUjtqUK2rSk7IkdUIS6nsUjPF5PIo/2KAvD"
+  access_key = ""
+  secret_key = ""
   region = "ap-south-1"
 }
 
