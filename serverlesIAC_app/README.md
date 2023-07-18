@@ -1,6 +1,6 @@
 # Serverless WEBAPP Using IAC(infrastructure as code)
 
-Tools to download & Requirements:
+Tools & Requirements:
 
   Terraform,
   
