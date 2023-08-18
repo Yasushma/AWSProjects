@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Create Amazon SNS Topic for Devops Guru
+
+Parameters:
+  EmailAddress:
+    Description: Email address for SNS subscription.
+    Type: String
+
+Resources:
+  DevOpsGuruTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: SNS Topic for DevOps Guru
+      TopicName: devops-guru
+      KmsMasterKeyId: !Ref DevOpsGuruCMK
+      Subscription:
+        - Endpoint: !Ref EmailAddress
+          Protocol: email
+
+  DevOpsGuruCMK:
+    Type: AWS::KMS::Key
+    Properties:
+      Enabled: True
+      EnableKeyRotation: True
+      KeyPolicy:
+        Id: DevOpsGuruCMK
+        Version: 2012-10-17
+        Statement:
+        - Sid: Allow DevOps Guru Service Principal
+          Effect: Allow
+          Principal:
+            Service: devops-guru.amazonaws.com
+          Action:
+            - kms:GenerateDataKey*
+            - kms:Decrypt
+          Resource: '*'
+        - Sid: Allow Administration
+          Effect: Allow
+          Principal:
+            AWS: !Sub arn:aws:iam::${AWS::AccountId}:root
+          Action: kms:*
+          Resource: '*'
